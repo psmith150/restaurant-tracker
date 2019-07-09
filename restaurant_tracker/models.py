@@ -1,7 +1,14 @@
 from django.db import models
-
+from colorful.fields import RGBColorField
 
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+    color = RGBColorField(default='#FF0000')
+
+    def __str__(self):
+      return self.name
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=200)
     rating = models.IntegerField('Rating')
@@ -17,23 +24,23 @@ class Restaurant(models.Model):
     ]
     speed = models.IntegerField('Speed', choices=SPEED_CHOICES, default=SLOW_SPEED)
     comment = models.CharField(max_length=300)
-    isOpen = models.BooleanField(default=True)
+    is_open = models.BooleanField(default=True)
     latitude = models.FloatField('Latitude')
     longitude = models.FloatField('Longitude')
-
+    tags = models.ManyToManyField(Tag, verbose_name='Tags', blank=True)
     def __str__(self):
         return self.name
 
 class User(models.Model):
-    firstName = models.CharField('First Name', max_length=100)
-    lastName = models.CharField('Last Name', max_length=100)
-    isActive = models.BooleanField('Is Active', default=True)
+    first_name = models.CharField('First Name', max_length=100)
+    last_name = models.CharField('Last Name', max_length=100)
+    is_active = models.BooleanField('Is Active', default=True)
 
     def __str__(self):
         return self.fullName()
 
     def fullName(self):
-        return self.firstName + ' ' + self.lastName
+        return self.first_name + ' ' + self.last_name
 
 class CurrencyField(models.IntegerField):
   description = "A field to save dollars as pennies (int) in db, but act like a float"
@@ -65,14 +72,12 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateTimeField('Date')
+    date = models.DateField('Date')
     price = CurrencyField(verbose_name='Price')
     comment = models.CharField(max_length=300)
     rating = models.IntegerField()
 
-class Tag(models.Model):
-    name = models.CharField(max_length=50)
-    restaurants = models.ManyToManyField(Restaurant, verbose_name="Restaurants")
+
 
 #Custom Fields
 
