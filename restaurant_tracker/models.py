@@ -11,8 +11,8 @@ class Tag(models.Model):
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=200)
-    rating = models.IntegerField('Rating')
-    price = models.IntegerField('Price')
+    rating = models.IntegerField('Rating', default=1)
+    price = models.IntegerField('Price', default=1)
     service = models.CharField(max_length=300)
     SLOW_SPEED = 1
     MEDIUM_SPEED = 2
@@ -25,8 +25,8 @@ class Restaurant(models.Model):
     speed = models.IntegerField('Speed', choices=SPEED_CHOICES, default=SLOW_SPEED)
     comment = models.CharField(max_length=300)
     is_open = models.BooleanField(default=True)
-    latitude = models.FloatField('Latitude')
-    longitude = models.FloatField('Longitude')
+    latitude = models.FloatField('Latitude', default=0.0)
+    longitude = models.FloatField('Longitude', default=0.0)
     tags = models.ManyToManyField(Tag, verbose_name='Tags', blank=True)
     def __str__(self):
         return self.name

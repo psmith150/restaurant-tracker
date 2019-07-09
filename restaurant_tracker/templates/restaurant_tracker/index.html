@@ -1,0 +1,14 @@
+{% comment %} {% extends "restaurant_tracker/base_restaurant.html" %} {% endcomment %}
+
+{% block page %}
+{% if restaurant_list %}
+    <ul>
+    {% for restaurant in restaurant_list %}
+        <li><a href="{% url 'restaurant_tracker:detail' restaurant.id %}">{{ restaurant.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p> No restaurants are available.</p>
+{% endif %}
+<a href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
+{% endblock %}
