@@ -1,7 +1,10 @@
 {% comment %} {% extends "base.html" %} {% endcomment %}
+{% load static %}
 {% block content%}
-    <div class="page-header">
-        <h1><a href="/restaurants">Restaurant Tracker</a></h1>
+    <link rel="stylesheet" type="text/css" href="{% static 'restaurant_tracker/style.css' %}">
+    <div class="topnav">
+        <a class="active" href="/restaurants">Restaurant List</a>
+        <a >Tags</a>
     </div>
     <div id="content">
         {% block page %}

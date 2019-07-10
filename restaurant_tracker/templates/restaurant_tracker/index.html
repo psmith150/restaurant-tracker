@@ -2,8 +2,10 @@
 
 {% block page %}
 <h2>Restaurants</h2>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
 {% if restaurant_list %}
-    <ul>
+    <ul id="restaurantList">
     {% for restaurant in restaurant_list %}
         <li><a href="{% url 'restaurant_tracker:detail' restaurant.id %}">{{ restaurant.name }}</a></li>
     {% endfor %}
@@ -12,4 +14,25 @@
     <p> No restaurants are available.</p>
 {% endif %}
 <a href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
+<script>
+    function myFunction() {
+    // Declare variables
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("restaurantList");
+    li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+        } else {
+        li[i].style.display = "none";
+        }
+    }
+    }
+</script>
 {% endblock page %}
