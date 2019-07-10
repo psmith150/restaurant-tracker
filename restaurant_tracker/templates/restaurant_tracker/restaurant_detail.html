@@ -1,1 +1,21 @@
+{% extends "restaurant_tracker/base_restaurant.html" %}
+
+{% block page %}
 <h1>{{ restaurant.name }}</h1>
+<p>Rating: {{ restaurant.rating }}</p>
+<p>Price: {{ restaurant.price }}</p>
+<p>Service: {{ restaurant.service }}</p>
+<p>Service: {{ restaurant.speed }}</p>
+<p>Comment: {{ restaurant.comment }}</p>
+<p>Is Open?: {{ restaurant.is_open }}</p>
+<p>Latitude: {{ restaurant.latitude }}</p>
+<p>Longitude: {{ restaurant.longitude }}</p>
+<h2>Tags</h2>
+<ul>
+    {% for tag in restaurant.tags.all %}
+        <li>{{ tag.name }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'restaurant_tracker:restaurant_edit' restaurant.id %}">Edit</a>
+<a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}">Delete</a>
+{% endblock page %}

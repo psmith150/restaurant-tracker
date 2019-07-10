@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.views import generic
-from django.urls import reverse
-
+from django.urls import reverse, reverse_lazy
+from django.forms import ModelForm
 from .models import Restaurant
+from .forms import RestaurantForm
 
 # Create your views here.
 class IndexView(generic.ListView):
@@ -15,6 +16,7 @@ class IndexView(generic.ListView):
 
 class RestaurantDetailView(generic.DetailView):
     model = Restaurant
+    template_name = 'restaurant_tracker/restaurant_detail.html'
     def get(self, request, *args, **kwargs):
         try:
             self.object = self.get_object()
@@ -24,8 +26,15 @@ class RestaurantDetailView(generic.DetailView):
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
-class RestaurantEditView(generic.edit.FormView):
-    form_class = Restaurant
+class RestaurantEditView(generic.edit.UpdateView):
+    model = Restaurant
+    form_class = RestaurantForm
+    template_name = "restaurant_tracker/restaurant_edit.html"
+
+class RestaurantDeleteView(generic.edit.DeleteView):
+    model = Restaurant
+    success_url = reverse_lazy('restaurant_tracker:index')
+
 
 def create_restaurant(request):
     restaurant = Restaurant()

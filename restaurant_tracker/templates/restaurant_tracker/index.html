@@ -1,6 +1,7 @@
-{% comment %} {% extends "restaurant_tracker/base_restaurant.html" %} {% endcomment %}
+{% extends "restaurant_tracker/base_restaurant.html" %}
 
 {% block page %}
+<h2>Restaurants</h2>
 {% if restaurant_list %}
     <ul>
     {% for restaurant in restaurant_list %}
@@ -11,4 +12,4 @@
     <p> No restaurants are available.</p>
 {% endif %}
 <a href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
-{% endblock %}
+{% endblock page %}

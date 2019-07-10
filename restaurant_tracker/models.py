@@ -1,5 +1,6 @@
 from django.db import models
 from colorful.fields import RGBColorField
+from django.urls import reverse
 
 # Create your models here.
 class Tag(models.Model):
@@ -30,6 +31,10 @@ class Restaurant(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name='Tags', blank=True)
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("restaurant_tracker:detail", kwargs={"pk": self.pk})
+    
 
 class User(models.Model):
     first_name = models.CharField('First Name', max_length=100)
