@@ -1,7 +1,12 @@
 {% comment %} {% extends "base.html" %} {% endcomment %}
 {% load static %}
-{% block content%}
-    <link rel="stylesheet" type="text/css" href="{% static 'restaurant_tracker/style.css' %}">
+<html>
+<head>
+<script src="https://kit.fontawesome.com/9357b5b30a.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'restaurant_tracker/style.css' %}">
+</head>
+<body>
+{% block content%} 
     <div class="topnav">
         <a class="active" href="/restaurants">Restaurant List</a>
         <a >Tags</a>
@@ -11,3 +16,5 @@
         {% endblock %}
     </div>
 {% endblock content %}
+</body>
+</html>

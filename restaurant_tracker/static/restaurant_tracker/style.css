@@ -25,3 +25,15 @@
     background-color: #4CAF50;
     color: white;
   }
+
+  .fa-star {
+    color:orange;
+  }
+
+  .fa-star-half-alt {
+    color: orange;
+  }
+
+  #rating-column {
+    color: orange;
+  }

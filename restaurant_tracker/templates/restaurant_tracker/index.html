@@ -1,20 +1,74 @@
 {% extends "restaurant_tracker/base_restaurant.html" %}
-
+{% load static %}
 {% block page %}
 <h2>Restaurants</h2>
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-
+<input type="text" id="search-bar" onkeyup="myFunction()" placeholder="Search restaurants...">
+<a href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
 {% if restaurant_list %}
-    <ul id="restaurantList">
+    <table id="restaurant-table">
+    <tr>
+        <th>Restaurant Name</th>
+        <th>Rating</th>
+        <th>Price</th>
+    </tr>
     {% for restaurant in restaurant_list %}
-        <li><a href="{% url 'restaurant_tracker:detail' restaurant.id %}">{{ restaurant.name }}</a></li>
+        <tr>
+            <td id="name-column"><a href="{% url 'restaurant_tracker:detail' restaurant.id %}">{{ restaurant.name }}</a></td>
+            <td id="rating-column">
+                {% if restaurant.rating == 0 %}
+                {% elif restaurant.rating == 1 %}
+                    <i class="fas fa-star-half-alt"></i>
+                {% elif restaurant.rating == 2 %}
+                    <i class="fas fa-star"></i>
+                {% elif restaurant.rating == 3 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                {% elif restaurant.rating == 4 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                {% elif restaurant.rating == 5 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                {% elif restaurant.rating == 6 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                {% elif restaurant.rating == 7 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i> 
+                    <i class="fas fa-star-half-alt"></i>
+                {% elif restaurant.rating == 8 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i> 
+                    <i class="fas fa-star"></i>
+                {% elif restaurant.rating == 9 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i> 
+                    <i class="fas fa-star"></i> 
+                    <i class="fas fa-star-half-alt"></i>
+                {% elif restaurant.rating == 10 %}
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i> 
+                    <i class="fas fa-star"></i> 
+                    <i class="fas fa-star"></i>
+                {% endif %}
+            </td>
+            <td id="price-column">{{ restaurant.price }}<i class="far fa-star"></i></td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p> No restaurants are available.</p>
 {% endif %}
-<a href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
-<script>
+<div id="filter-sidebar">
+
+</div>
+{% comment %} <script>
     function myFunction() {
     // Declare variables
     var input, filter, ul, li, a, i, txtValue;
@@ -34,5 +88,5 @@
         }
     }
     }
-</script>
+</script> {% endcomment %}
 {% endblock page %}
