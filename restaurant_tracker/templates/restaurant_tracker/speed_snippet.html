@@ -1,0 +1,5 @@
+{% for choice in restaurant.SPEED_CHOICES %}
+    {% if choice.0 == restaurant.speed %}
+        {{choice.1}}
+    {% endif %}
+{% endfor %}

@@ -4,43 +4,43 @@
     overflow: hidden;
   }
   
-  /* Style the links inside the navigation bar */
-  .topnav a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-  /* Change the color of links on hover */
-  .topnav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  /* Add a color to the active/current link */
-  .topnav a.active {
-    background-color: #4CAF50;
-    color: white;
-  }
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
 
-  .fa-star {
-    color:orange;
-  }
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
 
-  .fa-star-half-alt {
-    color: orange;
-  }
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
 
-  #rating-column {
-    color: orange;
-  }
-  .fa-dollar-sign {
-    color: green;
-  }
-  .tag-display {
-    padding: 2px;
-    margin: 2px;
-  }
+.fa-star {
+  color:orange;
+}
+
+.fa-star-half-alt {
+  color: orange;
+}
+
+#rating-column {
+  color: orange;
+}
+.fa-dollar-sign {
+  color: green;
+}
+.tag-display {
+  padding: 2px;
+  margin: 2px;
+}

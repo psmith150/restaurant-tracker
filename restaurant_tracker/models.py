@@ -45,6 +45,12 @@ class Restaurant(models.Model):
     def get_absolute_url(self):
         return reverse("restaurant_tracker:detail", kwargs={"pk": self.pk})
     
+    def get_menu_items(self):
+      try:
+        menu_items = MenuItem.objects.filter(restaurant = self.pk)
+      except MenuItem.DoesNotExist:
+        menu_items = None
+      return menu_items
 
 class User(models.Model):
     first_name = models.CharField('First Name', max_length=100)

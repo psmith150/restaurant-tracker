@@ -16,76 +16,14 @@
         <tr>
             <td id="name-column"><a href="{% url 'restaurant_tracker:detail' restaurant.id %}">{{ restaurant.name }}</a></td>
             <td id="rating-column">
-                {% if restaurant.rating == 0 %}
-                {% elif restaurant.rating == 1 %}
-                    <i class="fas fa-star-half-alt"></i>
-                {% elif restaurant.rating == 2 %}
-                    <i class="fas fa-star"></i>
-                {% elif restaurant.rating == 3 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                {% elif restaurant.rating == 4 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                {% elif restaurant.rating == 5 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                {% elif restaurant.rating == 6 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                {% elif restaurant.rating == 7 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i> 
-                    <i class="fas fa-star-half-alt"></i>
-                {% elif restaurant.rating == 8 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i> 
-                    <i class="fas fa-star"></i>
-                {% elif restaurant.rating == 9 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i> 
-                    <i class="fas fa-star"></i> 
-                    <i class="fas fa-star-half-alt"></i>
-                {% elif restaurant.rating == 10 %}
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i> 
-                    <i class="fas fa-star"></i> 
-                    <i class="fas fa-star"></i>
-                {% endif %}
+                {% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}
             </td>
             <td id="price-column">
-                {% if restaurant.price == 0 %}
-                {% elif restaurant.price == 1 %}
-                    <i class="fas fa-dollar-sign"></i>
-                {% elif restaurant.price == 2 %}
-                    <i class="fas fa-dollar-sign"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                {% elif restaurant.price == 3 %}
-                    <i class="fas fa-dollar-sign"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                {% elif restaurant.price == 4 %}
-                    <i class="fas fa-dollar-sign"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                    <i class="fas fa-dollar-sign"></i>
-                {% endif %}
+                {% include "restaurant_tracker/price_snippet.html" with price=restaurant.price %}
             </td>
             <td id="tag-column">
                 {% for tag in restaurant.tags.all %}
-                    <div style="background:{{tag.color}}">
-                        {% if tag.get_color_lightness >= 127 %}
-                            <p class="tag-display" style="color:black">{{tag.name}}</p>
-                        {% else %}
-                            <p class="tag-display" style="color:white">{{tag.name}}</p>
-                        {% endif %}
-                    </div>
+                    {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
                 {% endfor %}
             </td>
         </tr>
