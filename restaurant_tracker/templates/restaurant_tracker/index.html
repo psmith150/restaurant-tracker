@@ -10,6 +10,7 @@
         <th>Restaurant Name</th>
         <th>Rating</th>
         <th>Price</th>
+        <th>Tags</th>
     </tr>
     {% for restaurant in restaurant_list %}
         <tr>
@@ -58,7 +59,35 @@
                     <i class="fas fa-star"></i>
                 {% endif %}
             </td>
-            <td id="price-column">{{ restaurant.price }}<i class="far fa-star"></i></td>
+            <td id="price-column">
+                {% if restaurant.price == 0 %}
+                {% elif restaurant.price == 1 %}
+                    <i class="fas fa-dollar-sign"></i>
+                {% elif restaurant.price == 2 %}
+                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                {% elif restaurant.price == 3 %}
+                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                {% elif restaurant.price == 4 %}
+                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-dollar-sign"></i>
+                {% endif %}
+            </td>
+            <td id="tag-column">
+                {% for tag in restaurant.tags.all %}
+                    <div style="background:{{tag.color}}">
+                        {% if tag.get_color_lightness >= 127 %}
+                            <p class="tag-display" style="color:black">{{tag.name}}</p>
+                        {% else %}
+                            <p class="tag-display" style="color:white">{{tag.name}}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </td>
         </tr>
     {% endfor %}
     </table>

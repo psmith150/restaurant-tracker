@@ -37,3 +37,10 @@
   #rating-column {
     color: orange;
   }
+  .fa-dollar-sign {
+    color: green;
+  }
+  .tag-display {
+    padding: 2px;
+    margin: 2px;
+  }
