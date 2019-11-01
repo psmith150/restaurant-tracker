@@ -1,0 +1,12 @@
+{% extends "restaurant_tracker/base_restaurant.html" %}
+
+{% block page %}
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+<a href="{% url 'restaurant_tracker:tag_index' %}">Exit</a>
+<form method="POST" action="{% url 'restaurant_tracker:tag_delete' tag.id %}">
+   {% csrf_token %}<input type="submit" value="DELETE">
+</form>
+{% endblock page %}

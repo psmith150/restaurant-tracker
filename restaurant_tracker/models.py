@@ -16,6 +16,9 @@ class Tag(models.Model):
       green = int(color_string[3:5],16)
       blue = int(color_string[5:7],16)
       return (0.2126*red + 0.7152*green + 0.0722*blue)
+    
+    def get_absolute_url(self):
+        return reverse("restaurant_tracker:tag_edit", kwargs={"pk": self.pk})
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=200)

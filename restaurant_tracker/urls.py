@@ -13,4 +13,8 @@ urlpatterns = [
     # ex: /restaurants/create/
     path('create/', views.create_restaurant, name='restaurant_create'),
     path('<int:pk>/delete/', views.RestaurantDeleteView.as_view(), name='restaurant_delete'),
+    path('tags/', views.TagIndexView.as_view(), name='tag_index'),
+    path('tags/<int:pk>/edit/', views.TagEditView.as_view(), name='tag_edit'),
+    path('tags/create/', views.create_tag, name='tag_create'),
+    path('tags/<int:pk>/delete/', views.TagDeleteView.as_view(), name='tag_delete'),
 ]
