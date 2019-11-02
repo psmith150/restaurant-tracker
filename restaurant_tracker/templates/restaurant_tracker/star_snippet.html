@@ -1,42 +1,12 @@
-{% if rating == 0 %}
-    {% elif rating == 1 %}
-        <i class="fas fa-star-half-alt"></i>
-    {% elif rating == 2 %}
+{% load restaurant_tracker_extras %}
+{% with end=rating|add:1 %}
+{% for index in 2|get_range:end%}
+    {% if index|divisibleby:2%}
         <i class="fas fa-star"></i>
-    {% elif rating == 3 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half-alt"></i>
-    {% elif rating == 4 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-    {% elif rating == 5 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half-alt"></i>
-    {% elif rating == 6 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-    {% elif rating == 7 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star-half-alt"></i>
-    {% elif rating == 8 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i>
-    {% elif rating == 9 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star-half-alt"></i>
-    {% elif rating == 10 %}
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i> 
-        <i class="fas fa-star"></i>
+    {% endif %}
+{% endfor %}
+{% endwith %}
+{% if rating|divisibleby:2%}
+{% else %}
+    <i class="fas fa-star-half-alt"></i>
 {% endif %}
