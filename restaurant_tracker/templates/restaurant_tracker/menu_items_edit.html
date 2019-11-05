@@ -1,0 +1,10 @@
+{% extends "restaurant_tracker/base_restaurant.html" %}
+{% load static %}
+{% block page %}
+<form method="post">
+    <table>
+        {{ formset }}
+    </table>
+</form>
+<a href="{% url 'restaurant_tracker:detail' restaurant.id %}">Exit</a>
+{% endblock page %}

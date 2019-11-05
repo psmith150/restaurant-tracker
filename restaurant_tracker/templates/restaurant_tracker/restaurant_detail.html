@@ -24,6 +24,7 @@
     {% endfor %}
 </ul>
 {% endif %}
+<a href="{% url 'restaurant_tracker:restaurant_edit' restaurant.id %}">Edit</a>
 {% if restaurant.get_menu_items.count > 0 %}
     <h2>Menu Items</h2>
     <table id="menu-items-table">
@@ -50,6 +51,6 @@
     <p> No menu items are available.</p>
 {% endif %} 
 
-<a href="{% url 'restaurant_tracker:restaurant_edit' restaurant.id %}">Edit</a>
+<a href="{% url 'restaurant_tracker:menu_items_edit' restaurant.id %}">Edit</a>
 <a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}">Delete</a>
 {% endblock page %}

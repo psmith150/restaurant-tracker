@@ -3,7 +3,40 @@
 {% block page %}
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <h2>Menu Items</h2>
+    {{ menu_items.management_form }}  
+    <table id="menu-items-table">
+        <tr>
+            <th>Name</th>
+            <th>User</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Rating</th>
+            <th>Comment</th>
+        </tr>
+        {% for form in menu_items %}
+            <tr>
+                {% for field in form.visible_fields %}
+                    <td>
+                        {# Include the hidden fields in the form #}
+                        {% if forloop.first %}
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        {% endif %}
+                        <div class="fieldWrapper">
+                            {{ field.errors }}
+                            {{ field.label_tag }} {{ field }}
+                            {% if field.help_text %}
+                            <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    <td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+<input type="submit" value="Save">
 </form>
 <a href="{% url 'restaurant_tracker:detail' restaurant.id %}">Exit</a>
 {% endblock page %}
