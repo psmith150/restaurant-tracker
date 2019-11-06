@@ -1,5 +1,5 @@
 {% if tag.is_light_color %}
-    <span class="tag-display" style="color:black; background-color:{{tag.color}}; display:inline-block;">{{ tag.name }}</span>
+    <span class="tag-display" style="color:black; background-color:{{tag.color}};">{{ tag.name }}</span>
 {% else %}
-    <span class="tag-display" style="color:white; background-color:{{tag.color}}; display: inline-block;">{{ tag.name }}</span>            
+    <span class="tag-display" style="color:white; background-color:{{tag.color}};">{{ tag.name }}</span>            
 {% endif %}

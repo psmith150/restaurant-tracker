@@ -11,9 +11,10 @@
             <th>Rating</th>
             <th>Price</th>
             <th>Tags</th>
+            <th>Open/Closed</th>
         </tr>
         <tr>
-            <td colspan="4">
+            <td colspan="5">
                 <section>
                     <a class="add-new" href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
                 </section>
@@ -32,6 +33,9 @@
                     {% for tag in restaurant.tags.all %}
                         {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
                     {% endfor %}
+                </td>
+                <td id="open-closed-column">
+                    {% include "restaurant_tracker/restaurant_open_closed_snippet.html" with is_open=restaurant.is_open%}
                 </td>
                 <td class="overlay-link">
                     {% comment %} <div class="overlay-link"> {% endcomment %}

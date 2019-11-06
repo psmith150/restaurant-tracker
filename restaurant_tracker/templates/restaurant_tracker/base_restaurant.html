@@ -14,10 +14,12 @@
             <a class="active" href="/restaurants">Restaurant List</a>
             <a href="/restaurants/tags">Tags</a>
         </div>
-        <div id="content">
-            {% block page %}
-            {% endblock %}
-        </div>
+        <main>
+            <div id="content">
+                {% block page %}
+                {% endblock %}
+            </div>
+        </main>
     {% endblock content %}
 </body>
 </html>
