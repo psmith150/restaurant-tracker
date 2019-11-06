@@ -4,7 +4,7 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.forms import ModelForm, inlineformset_factory
 from django.db import transaction
-from .models import Restaurant, Tag, MenuItem
+from .models import Restaurant, Tag, MenuItem, User
 from .forms import RestaurantForm, TagForm, MenuItemForm, MenuItemsInlineFormSet
 
 # Create your views here.
@@ -50,9 +50,7 @@ class RestaurantEditView(generic.edit.UpdateView):
                 menu_items.instance = self.object
                 menu_items.save()
             else:
-                print('\n\nInvalid data\n\n')
-                for form in menu_items:
-                     print(form.errors)
+                pass
         return super(RestaurantEditView, self).form_valid(form)
 
 class RestaurantDeleteView(generic.edit.DeleteView):
@@ -92,44 +90,15 @@ class TagDeleteView(generic.edit.DeleteView):
 def create_tag(request):
     tag = Tag()
     tag.save()
-    return HttpResponseRedirect(reverse('restaurant_tracker:tag_edit', args=(tag.id)))
+    return HttpResponseRedirect(reverse('restaurant_tracker:tag_edit', args=(tag.id,)))
 
-class MenuItemsEditView(generic.TemplateView):
-    template_name = 'restaurant_tracker/menu_items_edit.html'
-    context_object_name = 'menu_items_list'
-    MenuItemsFormset = inlineformset_factory(Restaurant, MenuItem, fields=('name',), fk_name='restaurant')
-    def get(self, request, *args, **kwargs):  
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
-    # def get_queryset(self):
-    #     self.restaurant = get_object_or_404(Restaurant,id=self.kwargs['pk'])
-    #     return MenuItem.objects.filter(restaurant = self.restaurant)
-    def get_context_data(self, **kwargs):
-        print(kwargs)
-        restaurant_pk = kwargs['pk']
-        context = super().get_context_data(**kwargs)
-        restaurant = Restaurant.objects.get(id=restaurant_pk)
-        formset = self.MenuItemsFormset(restaurant)
-        #context['restaurant'] = self.restaurant
-        context['formset'] = formset
-        context['restaurant'] = get_object_or_404(Restaurant,id=restaurant_pk)
-        return context
-
-def create_menu_item(request, restaurant_pk):
+def create_menu_item(request, pk):
     menu_item = MenuItem()
-    menu_item.restaurant = restaurant_pk
-    menu_item.save()
-    return HttpResponseRedirect(reverse('restaurant_tracker:menu_items_edit', args=(restaurant_pk)))
-
-def edit_menu_item(request, pk):
-    restaurant = Restaurant.objects.get(pk=pk)
-    MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=1)
-    if request.method == "POST":
-        formset = MenuItemsInlineFormSet(request.POST, instance=restaurant)
-        if formset.is_valid():
-            formset.save()
-            # Do something. Should generally end with a redirect. For example:
-            return HttpResponseRedirect(restaurant.get_absolute_url())
+    menu_item.restaurant = get_object_or_404(Restaurant, id=pk)
+    first_user = User.objects.first()
+    if (first_user is None):
+        pass
     else:
-        formset = MenuItemsInlineFormSet(instance=restaurant)
-    return render(request, 'restaurant_tracker/menu_items_edit.html', {'formset': formset, 'restaurant':restaurant})
+        menu_item.user = User.objects.first()
+    menu_item.save()
+    return HttpResponseRedirect(reverse('restaurant_tracker:restaurant_edit', args=(pk,)))

@@ -31,12 +31,13 @@
                             <p class="help">{{ field.help_text|safe }}</p>
                             {% endif %}
                         </div>
-                    <td>
+                    </td>
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
 <input type="submit" value="Save">
 </form>
+<a href="{% url 'restaurant_tracker:menu_item_create' restaurant.id %}">Add new</a>
 <a href="{% url 'restaurant_tracker:detail' restaurant.id %}">Exit</a>
 {% endblock page %}

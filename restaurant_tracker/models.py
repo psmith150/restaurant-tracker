@@ -1,6 +1,14 @@
 from django.db import models
 from colorful.fields import RGBColorField
 from django.urls import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator, DecimalValidator, ValidationError
+
+#region Constants
+MAX_PRICE_VALUE = 4
+MIN_PRICE_VALUE = 1
+MAX_RATING_VALUE = 10
+MIN_RATING_VALUE = 1
+#endregion
 
 # Create your models here.
 class Tag(models.Model):
@@ -17,13 +25,16 @@ class Tag(models.Model):
       blue = int(color_string[5:7],16)
       return (0.2126*red + 0.7152*green + 0.0722*blue)
     
+    def is_light_color(self):
+      return self.get_color_lightness() > 127
+    
     def get_absolute_url(self):
         return reverse("restaurant_tracker:tag_edit", kwargs={"pk": self.pk})
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=200)
-    rating = models.IntegerField('Rating', default=1)
-    price = models.IntegerField('Price', default=1)
+    rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
+    price = models.IntegerField('Price', default=MIN_PRICE_VALUE, validators=[MaxValueValidator(limit_value=MAX_PRICE_VALUE), MinValueValidator(limit_value=MIN_PRICE_VALUE)])
     service = models.CharField(max_length=300, blank=True, default='')
     SLOW_SPEED = 1
     MEDIUM_SPEED = 2
@@ -39,6 +50,11 @@ class Restaurant(models.Model):
     latitude = models.FloatField('Latitude', default=0.0)
     longitude = models.FloatField('Longitude', default=0.0)
     tags = models.ManyToManyField(Tag, verbose_name='Tags', blank=True)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
     
@@ -77,7 +93,7 @@ class CurrencyField(models.IntegerField):
     try:
       return float(value) / 100
     except (TypeError, ValueError):
-      raise ValidationError("This value must be an integer or a string that represents an integer.")
+      raise ValidationError("This value must be an integer or a string that represents an integer.", code='invalid')
 
   def from_db_value(self, value, expression, connection, context):
     return self.to_python(value)
@@ -88,7 +104,6 @@ class CurrencyField(models.IntegerField):
     defaults.update(kwargs)
     return super(CurrencyField, self).formfield(**defaults)
 
-
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
@@ -96,7 +111,7 @@ class MenuItem(models.Model):
     date = models.DateField('Date')
     price = CurrencyField(verbose_name='Price')
     comment = models.CharField(max_length=300)
-    rating = models.IntegerField()
+    rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
 
 
 

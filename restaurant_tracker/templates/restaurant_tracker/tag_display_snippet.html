@@ -1,4 +1,4 @@
-{% if tag.get_color_lightness >= 127 %}
+{% if tag.is_light_color %}
     <span class="tag-display" style="color:black; background-color:{{tag.color}}; display:inline-block;">{{ tag.name }}</span>
 {% else %}
     <span class="tag-display" style="color:white; background-color:{{tag.color}}; display: inline-block;">{{ tag.name }}</span>            

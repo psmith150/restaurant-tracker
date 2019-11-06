@@ -27,5 +27,5 @@ class TagForm(ModelForm):
 class MenuItemForm(ModelForm):
     class Meta:
         model = MenuItem
-        fields = ['name', 'user', 'date', 'price','rating', 'comment', 'restaurant','id']
-MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=0)
+        fields = ['name', 'user', 'date', 'price','rating', 'comment']
+MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=1)
