@@ -1,33 +1,45 @@
 {% extends "restaurant_tracker/base_restaurant.html" %}
 {% load static %}
+{% block title %}Restaurant List{% endblock title %}
 {% block page %}
-<h2>Restaurants</h2>
-<input type="text" id="search-bar" onkeyup="myFunction()" placeholder="Search restaurants...">
-<a href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
+<h1>Restaurants</h1>
+{% comment %} <input type="text" id="search-bar" onkeyup="myFunction()" placeholder="Search restaurants..."> {% endcomment %}
 {% if restaurant_list %}
     <table id="restaurant-table">
-    <tr>
-        <th>Restaurant Name</th>
-        <th>Rating</th>
-        <th>Price</th>
-        <th>Tags</th>
-    </tr>
-    {% for restaurant in restaurant_list %}
         <tr>
-            <td id="name-column"><a href="{% url 'restaurant_tracker:detail' restaurant.id %}">{{ restaurant.name }}</a></td>
-            <td id="rating-column">
-                {% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}
-            </td>
-            <td id="price-column">
-                {% include "restaurant_tracker/price_snippet.html" with price=restaurant.price %}
-            </td>
-            <td id="tag-column">
-                {% for tag in restaurant.tags.all %}
-                    {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
-                {% endfor %}
-            </td>
+            <th>Restaurant Name</th>
+            <th>Rating</th>
+            <th>Price</th>
+            <th>Tags</th>
         </tr>
-    {% endfor %}
+        <tr>
+            <td colspan="4">
+                <section>
+                    <a class="add-new" href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
+                </section>
+            <td>
+        </tr>
+        {% for restaurant in restaurant_list %}
+            <tr>
+                <td id="name-column">{{ restaurant.name }}</td>
+                <td id="rating-column">
+                    {% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}
+                </td>
+                <td id="price-column">
+                    {% include "restaurant_tracker/price_snippet.html" with price=restaurant.price %}
+                </td>
+                <td id="tag-column">
+                    {% for tag in restaurant.tags.all %}
+                        {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
+                    {% endfor %}
+                </td>
+                <td class="overlay-link">
+                    {% comment %} <div class="overlay-link"> {% endcomment %}
+                        <a href="{% url 'restaurant_tracker:detail' restaurant.id %}">Link to restaurant</a>
+                    {% comment %} </div> {% endcomment %}
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 {% else %}
     <p> No restaurants are available.</p>

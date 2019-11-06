@@ -1,20 +1,23 @@
 {% comment %} {% extends "base.html" %} {% endcomment %}
 {% load static %}
 <html>
-<head>
-<script src="https://kit.fontawesome.com/9357b5b30a.js"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'restaurant_tracker/style.css' %}">
-</head>
-<body>
-{% block content%} 
-    <div class="topnav">
-        <a class="active" href="/restaurants">Restaurant List</a>
-        <a href="/restaurants/tags">Tags</a>
-    </div>
-    <div id="content">
-        {% block page %}
-        {% endblock %}
-    </div>
-{% endblock content %}
+    <head>
+        <script src="https://kit.fontawesome.com/9357b5b30a.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'restaurant_tracker/base_style.css' %}?v=4">
+        <title>
+            {% block title %}{% endblock title %} | Restaurant Tracker
+        </title>
+    </head>
+    <body>
+    {% block content%} 
+        <div class="topnav">
+            <a class="active" href="/restaurants">Restaurant List</a>
+            <a href="/restaurants/tags">Tags</a>
+        </div>
+        <div id="content">
+            {% block page %}
+            {% endblock %}
+        </div>
+    {% endblock content %}
 </body>
 </html>
