@@ -72,7 +72,7 @@ hr {
 }
 
 main {
-    width: 90%;
+    width: 100%;
     padding: 0px 0px 0px 5px;
 }
 
@@ -227,10 +227,6 @@ main {
 #menu-items-table tr:nth-child(odd) {
     background-color: #f2f2f2;
 }
-#menu-items-table tr:hover {
-    background-color: rgba(230, 230, 230, 0.75);
-    color: black;
-}
 
 #menu-items-table tr {
     position:relative;
@@ -247,22 +243,75 @@ main {
 }
 
 #menu-items-table #date-column {
-    width: 15%;
-}
-
-#menu-items-table #price-column {
     width: 12%;
 }
 
+#menu-items-table #price-column {
+    width: 8%;
+}
+
 #menu-items-table #rating-column {
-    width: 10%;
+    width: 8%;
 }
 
 #menu-items-table #comment-column {
-    width: 28%;
+    width: 32%;
 }
+
+#menu-items-table #delete-column {
+    width: 8%;
+}
+
+#menu-items-table input {
+    width: 100%;
+}
+
+#menu-items-table select {
+    width: 100% !important;
+}
+
+
 /*#endregion*/
 /*#region Restaurant edit page */
+#restaurant-form label {
+    font-weight: bold;
+}
+
+#restaurant-form #id_comment {
+    height: 4.0em;
+    width: 300px;
+}
+
+#restaurant-form #id_service {
+    height: 4.0em;
+    width: 300px;
+}
+
+#restaurant-form #id_comment_label {
+    vertical-align: middle;
+}
+
+#restaurant-form #id_tags_label {
+    vertical-align: middle;
+}
+
+#restaurant-form textarea {
+    vertical-align: middle;
+}
+
+#restaurant-form select {
+    vertical-align: middle;
+    width: auto;
+}
+
+#restaurant-form #menu-items-table tr:nth-child(2) {
+    position: relative;
+    display: block;
+    background-color: transparent;
+    padding: 0px 6px;
+    margin: -7px 0px 3px 0px;
+    height: 20px;
+}
 /*#endregion*/
 /*#endregion*/
 /*#region Tag pages */

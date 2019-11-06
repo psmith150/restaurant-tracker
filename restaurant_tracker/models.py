@@ -2,6 +2,7 @@ from django.db import models
 from colorful.fields import RGBColorField
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator, DecimalValidator, ValidationError
+from django.utils import timezone
 
 #region Constants
 MAX_PRICE_VALUE = 4
@@ -156,8 +157,8 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField('Date')
-    price = CurrencyField(verbose_name='Price')
+    date = models.DateField('Date', default=timezone.now)
+    price = CurrencyField(verbose_name='Price', default=0)
     comment = models.CharField(max_length=300)
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
 

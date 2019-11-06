@@ -1,7 +1,7 @@
 from django.forms import Form, ModelForm, inlineformset_factory
+from django import forms
 from .models import Restaurant, Tag, MenuItem
 from .widgets import StarRatingWidget
-from django import forms
 
 class RestaurantForm(ModelForm):
     class Meta:
@@ -28,4 +28,5 @@ class MenuItemForm(ModelForm):
     class Meta:
         model = MenuItem
         fields = ['name', 'user', 'date', 'price','rating', 'comment']
-MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=1)
+
+MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=0)
