@@ -1,6 +1,6 @@
 {% extends "restaurant_tracker/base_restaurant.html" %}
 {% load static %}
-{% block title %}Edit {{restaurant.name}}{% endblock title %}
+{% block title %}Edit - {{restaurant.name}}{% endblock title %}
 {% block page %}
 <form id="restaurant-form" method="post">{% csrf_token %}
     {% for field in form.visible_fields%}
@@ -55,9 +55,13 @@
             </tr>
         {% endfor %}
     </table>
-<input type="submit" value="Save">
-</form>
-<a href="{% url 'restaurant_tracker:detail' restaurant.id %}">Exit</a>
+    <section class="form-button-section">
+        <input class="form-button" type="submit" value="Save">
+        <a class="link-button" href="{% url 'restaurant_tracker:detail' restaurant.id %}">Exit</a>
+        <a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}"><i style="visibility:visible;" class="fas fa-trash-alt"></i></a>
+    </section>
+    </form>
+
 <script>
   $(function() {
     $('#restaurant-form').areYouSure(

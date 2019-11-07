@@ -48,7 +48,7 @@ class Restaurant(models.Model):
     """
     Represents a restaurant
     """
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, default='', blank=True)
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
     price = models.IntegerField('Price', default=MIN_PRICE_VALUE, validators=[MaxValueValidator(limit_value=MAX_PRICE_VALUE), MinValueValidator(limit_value=MIN_PRICE_VALUE)])
     service = models.CharField(max_length=300, blank=True, default='')
@@ -154,12 +154,12 @@ class MenuItem(models.Model):
     """
     Represents an item ordered from the menu at a Restaurant
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default='')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField('Date', default=timezone.now)
     price = CurrencyField(verbose_name='Price', default=0)
-    comment = models.CharField(max_length=300)
+    comment = models.CharField(max_length=300, default='')
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
 
 

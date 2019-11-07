@@ -57,7 +57,6 @@ class RestaurantDeleteView(generic.edit.DeleteView):
     model = Restaurant
     success_url = reverse_lazy('restaurant_tracker:index')
 
-
 def create_restaurant(request):
     restaurant = Restaurant()
     restaurant.save()
@@ -74,6 +73,7 @@ class TagEditView(generic.edit.UpdateView):
     model = Tag
     form_class = TagForm
     template_name = "restaurant_tracker/tag_edit.html"
+    success_url = reverse_lazy('restaurant_tracker:tag_index')
     def get(self, request, *args, **kwargs):
         try:
             self.object = self.get_object()

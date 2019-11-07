@@ -1,21 +1,25 @@
 {% extends "restaurant_tracker/base_tag.html" %}
 {% load static %}
+{% block title %}Tag List{% endblock title %}
 {% block page %}
-<h2>Tags</h2>
-<input type="text" id="search-bar" onkeyup="myFunction()" placeholder="Search tags...">
-<a href="{% url 'restaurant_tracker:tag_create' %}">Add tag</a>
+<h1 class="inline-h1">Tags</h1>
+{% comment %} <input type="text" id="search-bar" onkeyup="myFunction()" placeholder="Search tags..."> {% endcomment %}
 {% if tag_list %}
     <table id="tag-table">
     <tr>
-        <th>Tag Name</th>
+        <td colspan="1">
+            <section>
+                <a class="add-new" href="{% url 'restaurant_tracker:tag_create' %}">Add tag</a>
+            </section>
+        </td>
     </tr>
     {% for tag in tag_list %}
         <tr>
-            {% if tag.get_color_lightness >= 127 %}
-                <td id="name-column"><a class="tag-display" style="color:black; background-color:{{tag.color}}; text-decoration:none" href="{% url 'restaurant_tracker:tag_edit' tag.id %}">{{ tag.name }}</a></td>
-            {% else %}
-                <td id="name-column"><a class="tag-display" style="color:white; background-color:{{tag.color}}; text-decoration:none" href="{% url 'restaurant_tracker:tag_edit' tag.id %}">{{ tag.name }}</a></td>
-            {% endif %}
+            <td id="name-column">
+                <a href="{% url 'restaurant_tracker:tag_edit' tag.id %}">
+                    {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
+                </a>
+            </td>
         </tr>
     {% endfor %}
     </table>

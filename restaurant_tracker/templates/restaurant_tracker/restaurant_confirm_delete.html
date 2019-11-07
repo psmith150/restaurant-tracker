@@ -3,6 +3,7 @@
 {% block page %}
 <form method="post">{% csrf_token %}
     <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm">
+    <input type="submit" value="Yes">
+    <a href="{% url 'restaurant_tracker:restaurant_edit' restaurant.id %}">No</a>
 </form>
 {% endblock page %}

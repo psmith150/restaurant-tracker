@@ -1,12 +1,15 @@
 {% extends "restaurant_tracker/base_tag.html" %}
-
+{% block title %}Edit - {{tag.name}}{% endblock title %}
 {% block page %}
-<form method="post">{% csrf_token %}
+<form method="post" id="tag-form">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save">
+    <section class="form-button-section">
+        <input class="form-button" type="submit" value="Save">
+        <a class="link-button" href="{% url 'restaurant_tracker:tag_index' %}">Exit</a>
+        {% comment %} <a href="{% url 'restaurant_tracker:tag_delete' tag.id %}"><i style="visibility:visible;" class="fas fa-trash-alt"></i></a> {% endcomment %}
+    </section>
 </form>
-<a href="{% url 'restaurant_tracker:tag_index' %}">Exit</a>
-<form method="POST" action="{% url 'restaurant_tracker:tag_delete' tag.id %}">
-   {% csrf_token %}<input type="submit" value="DELETE">
+<form class="delete-form" method="post" action="{% url 'restaurant_tracker:tag_delete' tag.id %}">{% csrf_token %}
+    <button class="image-button" type="submit"><i style="visibility:visible;" class="fas fa-trash-alt"></i></button>
 </form>
 {% endblock page %}
