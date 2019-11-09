@@ -1,0 +1,5 @@
+include LICENSE
+include README.md
+recursive-include restaurant_tracker/static *
+recursive-include restaurant_tracker/templates *
+recursive-include restaurant_tracker/templatetags *
