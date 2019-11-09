@@ -9,6 +9,9 @@ from .forms import RestaurantForm, TagForm, MenuItemForm, MenuItemsInlineFormSet
 
 # Create your views here.
 class IndexView(generic.ListView):
+    """
+    Displays a list of all Restaurants
+    """
     template_name = 'restaurant_tracker/index.html'
     context_object_name = 'restaurant_list'
 
@@ -16,6 +19,9 @@ class IndexView(generic.ListView):
         return Restaurant.objects.order_by('name')
 
 class RestaurantDetailView(generic.DetailView):
+    """
+    Displays a detail view of a Restaurant
+    """
     model = Restaurant
     template_name = 'restaurant_tracker/restaurant_detail.html'
     def get(self, request, *args, **kwargs):
@@ -28,6 +34,9 @@ class RestaurantDetailView(generic.DetailView):
         return self.render_to_response(context)
 
 class RestaurantEditView(generic.edit.UpdateView):
+    """
+    Displays a form for editing fields of a Restaurant
+    """
     model = Restaurant
     form_class = RestaurantForm
     template_name = "restaurant_tracker/restaurant_edit.html"
@@ -54,10 +63,15 @@ class RestaurantEditView(generic.edit.UpdateView):
         return super(RestaurantEditView, self).form_valid(form)
 
 class RestaurantDeleteView(generic.edit.DeleteView):
+    """
+    Displays a confirmation for deleting a Restaurant"""
     model = Restaurant
     success_url = reverse_lazy('restaurant_tracker:index')
 
 def create_restaurant(request):
+    """
+    Creates a new restaurant
+    """
     restaurant = Restaurant()
     restaurant.save()
     return HttpResponseRedirect(reverse('restaurant_tracker:restaurant_edit', args=(restaurant.id,)))
