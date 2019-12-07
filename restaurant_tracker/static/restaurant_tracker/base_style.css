@@ -1,0 +1,385 @@
+/*#region Global settings */
+/* Add a black background color to the top navigation */
+:root {
+    --table-header-background-color: hsl(190,65%,56%);
+    --table-header-color: rgb(250, 250, 250);
+    --table-hover-background-color: rgba(230, 230, 230, 0.75);
+    --table-hover-color: black;
+    --table-dark-row-color: #f2f2f2;
+    --table-light-row-color: white;
+    --button-background: linear-gradient(to top, rgb(220, 220, 220) 16%, rgb(252, 252, 252) 79%); 
+    --button-active-background: linear-gradient(to bottom, rgb(220, 220, 220) 16%, rgb(252, 252, 252) 79%);
+    --button-border-color: rgba(150,150,150,1.0);
+}
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+  }
+  
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.fa-star {
+    color:orange;
+}
+
+.fa-star-half-alt {
+    color: orange;
+}
+
+.fa-dollar-sign {
+    color: green;
+}
+.tag-display {
+    padding: 3px;
+    margin: 2px;
+    display:inline-block !important;
+    border-radius: 6px;
+    text-align: center;
+}
+
+h1 {
+    text-decoration: underline !important;
+}
+
+.inline-h1 {
+    display:inline-block;
+    margin-right:10px;
+    margin-bottom:0px
+}
+
+.add-new {
+    color: #5489ec;
+    text-align: left;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.detail-field-label {
+    font-weight: bold;
+}
+
+hr {
+    width: 90%;
+    text-align: left;
+    border-width: 1px;
+    border-color: rgba(200,200,200,1.0);
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+main {
+    width: 100%;
+    padding: 0px 0px 0px 5px;
+}
+
+.fa-edit {
+    color: orange;
+    opacity: 0.6;
+    visibility: hidden;
+}
+
+.fa-edit:hover {
+    opacity: 1.0;
+}
+
+.fa-trash-alt {
+    color: darkgray;
+    opacity: 0.6;
+    visibility: hidden;
+}
+
+.fa-trash-alt:hover {
+    opacity: 1.0;
+}
+
+#title-content:hover i{
+    visibility: visible;
+}
+
+.link-button:link, .link-button:visited, .link-button:hover, .form-button {
+    background: var(--button-background);
+    color: black;
+    padding: 4px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid var(--button-border-color);
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .link-button:active, form-button:active {
+    background: var(--button-active-background);
+  }
+
+  .form-button-section {
+      margin: 10px 0px 0px 0px;
+  }
+
+  .image-button {
+      background-color:transparent;
+      border-width: 0px;
+      padding: 0px;
+      height: 1em;
+      font-size: 16px;
+  }
+
+/*#endregion*/
+
+/*#region Restaurant pages */
+/*#region Restaurant index page */
+#restaurant-table {
+    width: 100%;
+    border: 0px solid black;
+    padding: 0px 12px;
+    border-collapse: separate;
+    --row-height: 25px;
+    --row-padding: 3px;
+    border-spacing: 0px 2px;
+}
+
+ #restaurant-table th{
+    height: 20px;
+    padding: 2px;
+    text-align: left;
+    /* text-decoration: underline;*/
+    background-color: var(--table-header-background-color);
+    color: var(--table-header-color);
+} 
+
+ #restaurant-table td {
+    /* border-bottom: 1px solid #ddd;*/
+    padding: var(--row-padding) 0px var(--row-padding) 2px;
+}
+
+#restaurant-table tr:nth-child(odd) {
+    background-color: var(--table-dark-row-color);
+}
+
+#restaurant-table tr:nth-child(even) {
+    background-color: var(--table-light-row-color);
+}
+
+#restaurant-table tr:hover {
+    background-color: var(--table-hover-background-color);
+    color: var(--table-hover-color);
+}
+
+#restaurant-table tr {
+    position:relative;
+    height: var(--row-height);
+}
+
+#restaurant-table tr:nth-child(2) {
+    position: relative;
+    display: block;
+    background-color: transparent;
+    padding: 0px 6px;
+    margin: -7px 0px 3px 0px;
+    height: 20px;
+}
+
+#restaurant-table #name-column {
+    width: 35%;
+    word-wrap: normal;
+}
+
+#restaurant-table #rating-column {
+    width: 15%;
+}
+
+#restaurant-table #price-column {
+    width: 10%;
+}
+
+#restaurant-table #tag-column {
+    width: 30%;
+}
+
+#restaurant-table #open-closed-column {
+    width: 10%;
+}
+
+#restaurant-table .overlay-link {
+    position:absolute;
+    background-color:transparent;
+    left:18px;
+    right: 0.0em;
+    margin: 0px;
+    height: calc(var(--row-height));
+    vertical-align: center;
+}
+
+#restaurant-table .overlay-link a{
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    visibility: visible;
+    z-index: 100;
+    opacity: 0.0;
+}
+/*#endregion*/
+/*#region Restaurant detail page */
+.open-close-display {
+    font-weight:bold !important;
+    border-radius: 3px;
+    padding: 3px;
+    display: inline-block;
+}
+
+#menu-items-table {
+    width: 100%;
+    border: 0px solid black;
+    padding: 0px 12px;
+    border-collapse: separate;
+    --row-height: 25px;
+    --row-padding: 3px;
+    border-spacing: 0px 2px;
+}
+
+ #menu-items-table th{
+    height: 20px;
+    padding: 2px;
+    text-align: left;
+    /* text-decoration: underline;*/
+    background-color: var(--table-header-background-color);
+    color: var(--table-header-color);
+} 
+
+ #menu-items-table td {
+    /* border-bottom: 1px solid #ddd;*/
+    padding: var(--row-padding) 0px var(--row-padding) 2px;
+}
+
+
+#menu-items-table tr:nth-child(odd) {
+    background-color: var(--table-dark-row-color);
+}
+
+#menu-items-table tr:nth-child(even) {
+    background-color: var(--table-light-row-color);
+}
+
+#menu-items-table tr {
+    position:relative;
+    height: var(--row-height);
+}
+
+#menu-items-table #name-column {
+    width: 20%;
+    word-wrap: normal;
+}
+
+#menu-items-table #user-column {
+    width: 15%;
+}
+
+#menu-items-table #date-column {
+    width: 12%;
+}
+
+#menu-items-table #price-column {
+    width: 8%;
+}
+
+#menu-items-table #rating-column {
+    width: 8%;
+}
+
+#menu-items-table #comment-column {
+    width: 32%;
+}
+
+#menu-items-table #delete-column {
+    width: 8%;
+}
+
+#menu-items-table input {
+    width: 100%;
+}
+
+#menu-items-table select {
+    width: 100% !important;
+}
+
+
+/*#endregion*/
+/*#region Restaurant edit page */
+#restaurant-form label {
+    font-weight: bold;
+}
+
+#restaurant-form #id_comment {
+    height: 4.0em;
+    width: 300px;
+}
+
+#restaurant-form #id_service {
+    height: 4.0em;
+    width: 300px;
+}
+
+#restaurant-form #id_comment_label {
+    vertical-align: middle;
+}
+
+#restaurant-form #id_tags_label {
+    vertical-align: middle;
+}
+
+#restaurant-form textarea {
+    vertical-align: middle;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#restaurant-form select {
+    vertical-align: middle;
+    width: auto;
+}
+
+#restaurant-form #menu-items-table tr:nth-child(2) {
+    position: relative;
+    display: block;
+    background-color: transparent;
+    padding: 0px 6px;
+    margin: -7px 0px 3px 0px;
+    height: 20px;
+}
+/*#endregion*/
+/*#endregion*/
+/*#region Tag pages */
+/*#region Tag index page */
+/*#endregion*/
+/*#region Tag edit page */
+#tag-form label {
+    font-weight: bold;
+}
+
+.delete-form {
+    position: absolute;
+    top: 155px;
+    left: 123px;
+}
+/*#endregion*/
+/*#endregion*/

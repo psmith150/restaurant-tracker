@@ -1,0 +1,9 @@
+{% extends "restaurant_tracker/base_tag.html" %}
+
+{% block page %}
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+    <a href="{% url 'restaurant_tracker:tag_edit' tag.id %}">No</a>
+</form>
+{% endblock page %}

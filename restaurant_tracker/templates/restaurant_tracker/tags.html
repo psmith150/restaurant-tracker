@@ -1,0 +1,53 @@
+{% extends "restaurant_tracker/base_tag.html" %}
+{% load static %}
+{% block title %}Tag List{% endblock title %}
+{% block page %}
+<h1 class="inline-h1">Tags</h1>
+{% comment %} <input type="text" id="search-bar" onkeyup="myFunction()" placeholder="Search tags..."> {% endcomment %}
+{% if tag_list %}
+    <table id="tag-table">
+    <tr>
+        <td colspan="1">
+            <section>
+                <a class="add-new" href="{% url 'restaurant_tracker:tag_create' %}">Add tag</a>
+            </section>
+        </td>
+    </tr>
+    {% for tag in tag_list %}
+        <tr>
+            <td id="name-column">
+                <a href="{% url 'restaurant_tracker:tag_edit' tag.id %}">
+                    {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p> No tags are available.</p>
+{% endif %}
+<div id="filter-sidebar">
+
+</div>
+{% comment %} <script>
+    function myFunction() {
+    // Declare variables
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("restaurantList");
+    li = ul.getElementsByTagName('li');
+
+    // Loop through all list items, and hide those who don't match the search query
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+        } else {
+        li[i].style.display = "none";
+        }
+    }
+    }
+</script> {% endcomment %}
+{% endblock page %}

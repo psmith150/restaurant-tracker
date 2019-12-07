@@ -1,0 +1,6 @@
+{% load restaurant_tracker_extras %}
+{% with end=price|add:1 %}
+{% for index in 1|get_range:end%}
+        <i class="fas fa-dollar-sign"></i>
+{% endfor %}
+{% endwith %}
