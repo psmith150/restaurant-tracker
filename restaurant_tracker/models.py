@@ -159,7 +159,7 @@ class MenuItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField('Date', default=timezone.now)
     price = CurrencyField(verbose_name='Price', default=0)
-    comment = models.CharField(max_length=300, default='')
+    comment = models.CharField(max_length=300, default='', blank=True)
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
 
 

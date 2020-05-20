@@ -1,0 +1,4 @@
+.star-rating label:hover
+{
+    filter: grayscale(0.5);
+}
