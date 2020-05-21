@@ -1,4 +1,43 @@
+.star-rating input
+{
+    display: none;
+}
+
+.star-rating
+{
+    display: inline-flex;
+}
+
+.star-rating *
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.star-rating label
+{
+    padding: 0px 2px 0px 2px;
+}
+
+.star-rating:not(:hover) input:checked ~ label
+{
+    opacity: 0;
+}
+
+.star-rating:hover label
+{
+    opacity: 1.0;
+}
+
+
 .star-rating label:hover
 {
-    filter: grayscale(0.5);
+    opacity: 1;
 }
+
+/* .star-rating label:hover, */
+.star-rating label:hover ~ label
+{
+    opacity: 0.5;
+}
+

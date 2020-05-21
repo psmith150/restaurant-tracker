@@ -1,28 +1,9 @@
-{% block rating_style %}
-<style>
-    #{{ id }} .star-ratings-rating-full, #{{ id }} .star-ratings-rating-empty {
-        width: {{ icon_width }}px;
-        height: {{ icon_height }}px;
-        background: url({{ sprite_image }}) no-repeat;
-        background-size: {{ sprite_width }}px;
-    }
-    #{{ id }} .star-ratings-rating-empty {
-        background-position: -{{ icon_width }}px 0;
-    }
-    {% if editable %}
-    #{{ id }} .star-ratings-rating-full:hover, #{{ id }} .star-ratings-rating-empty:hover {
-        background-position: -{{ icon_width|add:icon_width }}px 0;
-    }
-    {% endif %}
-</style>
-{% endblock rating_style %}
-
 {% load static %}
-<div id="star-rating-{{ widget.name }}" class="star-rating">
+<span id="id_star-rating-{{ widget.name }}" class="star-rating">
     {% for star in stars %}
-        <input type="radio" name="{{ widget.name }}" id ="{{ widget.name }}- {{ forloop.counter0 }}"
+        <label for="{{ widget.name }}-{{ forloop.counter0 }}"><i class="fas fa-star"></i></label>
+        <input type="radio" name="{{ widget.name }}" id ="{{ widget.name }}-{{ forloop.counter0 }}"
             value ="{{ star }}" {% if widget.value == star|stringformat:'i' %}checked{% endif %} />
-        <label for="{{ widget.name }}-{{ forloop.counter0 }}"><span>{{ star }}</span></label>
     {% endfor %}
-</div>
+</span>
 <link rel="stylesheet" href="{% static 'restaurant_tracker/star_rating_style.css' %}" />

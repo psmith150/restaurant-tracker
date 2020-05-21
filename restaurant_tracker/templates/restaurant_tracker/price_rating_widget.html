@@ -1,0 +1,9 @@
+{% load static %}
+<span id="id_price-rating-{{ widget.name }}" class="price-rating">
+    {% for price in prices %}
+        <label for="{{ widget.name }}-{{ forloop.counter0 }}"><i class="fas fa-dollar-sign"></i></label>
+        <input type="radio" name="{{ widget.name }}" id ="{{ widget.name }}-{{ forloop.counter0 }}"
+            value ="{{ price }}" {% if widget.value == price|stringformat:'i' %}checked{% endif %} />
+    {% endfor %}
+</span>
+<link rel="stylesheet" href="{% static 'restaurant_tracker/price_rating_style.css' %}" />

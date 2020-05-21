@@ -1,0 +1,43 @@
+.price-rating input
+{
+    display: none;
+}
+
+.price-rating
+{
+    display: inline-flex;
+}
+
+.price-rating *
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+.price-rating label
+{
+    padding: 0px 2px 0px 2px;
+}
+
+.price-rating:not(:hover) input:checked ~ label
+{
+    opacity: 0;
+}
+
+.price-rating:hover label
+{
+    opacity: 1.0;
+}
+
+
+.price-rating label:hover
+{
+    opacity: 1;
+}
+
+/* .price-rating label:hover, */
+.price-rating label:hover ~ label
+{
+    opacity: 0.5;
+}
+
