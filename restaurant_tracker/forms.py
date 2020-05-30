@@ -29,5 +29,8 @@ class MenuItemForm(ModelForm):
     class Meta:
         model = MenuItem
         fields = ['name', 'user', 'date', 'price','rating', 'comment']
+        widgets = {
+            'rating' : StarRatingWidget(stars=MAX_RATING_VALUE, halfStars=True, attrs={'id':'id_star-rating-rating'}),
+        }
 
 MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=0)
