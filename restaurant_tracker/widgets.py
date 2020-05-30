@@ -12,12 +12,14 @@ class StarRatingWidget(Widget):
         super(StarRatingWidget, self).__init__(attrs)
 
         self.stars = stars if stars else DEFAULT_STARS
-        if (halfStars):
-            self.stars = self.stars * 2
+        self.halfStars = halfStars
+        # if (self.halfStars):
+        #     self.stars = self.stars * 2
 
     def get_context(self, name, value, attrs=None):
         context = super(StarRatingWidget, self).get_context(name, value, attrs)
         context['stars'] = range(1, self.stars+1, 1)
+        context['halfStars'] = self.halfStars
         return context
 
 class PriceRatingWidget(Widget):

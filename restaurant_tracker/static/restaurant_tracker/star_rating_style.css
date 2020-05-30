@@ -1,3 +1,8 @@
+:root 
+{
+    --icon-padding: 2px;
+    --icon-size : 0.5em;
+}
 .star-rating input
 {
     display: none;
@@ -14,7 +19,7 @@
     padding: 0px;
 }
 
-.star-rating label
+.star-rating label:not(.star-even):not(.star-odd)
 {
     padding: 0px 2px 0px 2px;
 }
@@ -35,9 +40,33 @@
     opacity: 1;
 }
 
-/* .star-rating label:hover, */
 .star-rating label:hover ~ label
 {
     opacity: 0.5;
+}
+
+.star-even
+{
+    padding: 0px 0px 0px var(--icon-padding);
+    width: var(--icon-size);
+    transform: scaleX(-1.0);
+    overflow: hidden;
+}
+
+.star-even i
+{
+    width: var(--icon-size);
+}
+
+.star-odd
+{
+    padding: 0px 0px 0px var(--icon-padding);
+    width: var(--icon-size);
+    overflow:hidden;
+}
+
+.star-odd i
+{
+    width: var(--icon-size);
 }
 

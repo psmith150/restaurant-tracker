@@ -9,7 +9,7 @@ class RestaurantForm(ModelForm):
         model = Restaurant
         fields = ['name', 'rating', 'price', 'service', 'speed', 'comment', 'is_open', 'tags']
         widgets = {
-            'rating' : StarRatingWidget(stars=MAX_RATING_VALUE, halfStars=False, attrs={'id':'id_star-rating-rating'}),
+            'rating' : StarRatingWidget(stars=MAX_RATING_VALUE, halfStars=True, attrs={'id':'id_star-rating-rating'}),
             'price' : PriceRatingWidget(prices=MAX_PRICE_VALUE, attrs={'id':'id_price-rating-price'}),
             'service' : forms.Textarea(attrs={'id':'id_service'}),
             'comment' : forms.Textarea(attrs={'id':'id_comment'}),
