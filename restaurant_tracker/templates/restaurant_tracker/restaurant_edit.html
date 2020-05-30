@@ -10,8 +10,7 @@
             {% endfor %}
         {% endif %}
         <p>
-            <label id="{{ field.id_for_label }}_label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
-            {{ field }}
+            <label id="{{ field.id_for_label }}_label" for="{{ field.id_for_label }}">{{ field.label }}:</label>{{ field }}
         </p>
     {% endfor %}
     <h2>Menu Items</h2>

@@ -38,13 +38,13 @@
     color: white;
 }
 
-.fa-star {
+.fa-star,
+.fa-star-half,
+.fa-star-half-alt 
+{
     color:orange;
 }
 
-.fa-star-half-alt {
-    color: orange;
-}
 
 .fa-dollar-sign {
     color: green;

@@ -1,58 +1,18 @@
-{% block rating_style %}
-<style>
-    #{{ id }} .star-ratings-rating-full, #{{ id }} .star-ratings-rating-empty {
-        width: {{ icon_width }}px;
-        height: {{ icon_height }}px;
-        background: url({{ sprite_image }}) no-repeat;
-        background-size: {{ sprite_width }}px;
-    }
-    #{{ id }} .star-ratings-rating-empty {
-        background-position: -{{ icon_width }}px 0;
-    }
-    {% if editable %}
-    #{{ id }} .star-ratings-rating-full:hover, #{{ id }} .star-ratings-rating-empty:hover {
-        background-position: -{{ icon_width|add:icon_width }}px 0;
-    }
-    {% endif %}
-</style>
-{% endblock rating_style %}
-
-{% block rating_container %}
-<div id="{{ id }}" class="star-ratings" data-max-rating="{{ star_count }}">
-    {% block rating_stars %}
-        <div class="star-ratings-rating-stars-container">
-            <ul class="star-ratings-rating-background">
-                {% for star in stars %}
-                    <li>
-                        {% if editable %}
-                        <form action="{% url 'ratings:rate' rating.content_type_id rating.object_id %}" class="star-ratings-rate-action" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" value="{{ star }}" name="score">
-                            <input type="hidden" value="{{ request.path }}" name="next">
-                            <button type="submit" class="star-ratings-rating-empty" data-score="{{ star }}"></button>
-                        </form>
-                        {% else %}
-                            <span class="star-ratings-rating-empty"></span>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-
-            <ul class="star-ratings-rating-foreground" style="width: {{ percentage|floatformat }}%">
-                {% for star in stars %}
-                    <li>
-                    {% if editable %}
-                    <form action="{% url 'ratings:rate' rating.content_type_id rating.object_id %}" class="star-ratings-rate-action" method="post">
-                        {% csrf_token %}
-                        <input type="hidden" value="{{ star }}" name="score">
-                        <input type="hidden" value="{{ request.path }}" name="next">
-                        <button type="submit" class="star-ratings-rating-full" data-score="{{ star }}"></button>
-                    </form>
-                    {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endblock %}
-</div>
-{% endblock rating_container %}
+{% load static %}
+{% load restaurant_tracker_extras %}
+<span id="id_star-rating-{{ widget.name }}" class="star-rating">
+    {% for star in stars %}
+        {% if halfStars %}
+            {% if star|divisibleby:2%}
+                <label class="star-even" for="{{ widget.name }}-{{ forloop.counter0 }}"><i class="fas fa-star-half"></i></label>
+            {% else %}
+                <label class="star-odd" for="{{ widget.name }}-{{ forloop.counter0 }}"><i class="fas fa-star-half"></i></label>
+            {% endif %}
+        {% else %}
+            <label for="{{ widget.name }}-{{ forloop.counter0 }}"><i class="fas fa-star"></i></label>
+        {% endif %}
+        <input type="radio" name="{{ widget.name }}" id ="{{ widget.name }}-{{ forloop.counter0 }}"
+            value ="{{ star }}" {% if widget.value == star|stringformat:'i' %}checked{% endif %} />
+    {% endfor %}
+</span>
+<link rel="stylesheet" href="{% static 'restaurant_tracker/star_rating_style.css' %}" />
