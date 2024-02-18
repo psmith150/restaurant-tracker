@@ -2,11 +2,11 @@
 {% with end=rating|add:1 %}
 {% for index in 2|get_range:end%}
     {% if index|divisibleby:2%}
-        <i class="fas fa-star"></i>
+        <i class="fa-solid fa-star"></i>
     {% endif %}
 {% endfor %}
 {% endwith %}
 {% if rating|divisibleby:2%}
 {% else %}
-    <i class="fas fa-star-half-alt"></i>
+    <i class="fa-solid fa-star-half"></i>
 {% endif %}
