@@ -3,73 +3,111 @@
 {% block title %}Edit - {{restaurant.name}}{% endblock title %}
 {% block page %}
 <form id="restaurant-form" method="post">{% csrf_token %}
-    {% for field in form.visible_fields%}
-        {% if forloop.first %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-        {% endif %}
-        <p>
-            <label id="{{ field.id_for_label }}_label" for="{{ field.id_for_label }}">{{ field.label }}:</label>{{ field }}
-        </p>
-    {% endfor %}
-    <h2>Menu Items</h2>
-    {{ menu_items.management_form }}  
-    <table id="menu-items-table">
-        <tr>
-            <th>Name</th>
-            <th>User</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Rating</th>
-            <th>Comment</th>
-            <th>Delete</th>
-        </tr>
-        <tr>
-            <td colspan="7">
-                <section>
-                    <a class="add-new" href="{% url 'restaurant_tracker:menu_item_create' restaurant.id %}">Add menu item</a>
-                </section>
-            <td>
+  {% for field in form.visible_fields%}
+  {% if forloop.first %}
+  {% for hidden in form.hidden_fields %}
+  {{ hidden }}
+  {% endfor %}
+  {% endif %}
+  <p>
+    <label id="{{ field.id_for_label }}_label" for="{{ field.id_for_label }}">{{ field.label }}:</label>{{ field }}
+  </p>
+  {% endfor %}
+  <h2>Menu Items</h2>
+  {{ menu_items.management_form }}  
+  <table id="menu-items-table">
+    <tr>
+      <th>Name</th>
+      <th>User</th>
+      <th>Date</th>
+      <th>Price</th>
+      <th>Rating</th>
+      <th>Comment</th>
+      <th>Delete</th>
+    </tr>
+    <tr>
+      <td colspan="7">
+        <section>
+          <a id="add-menu-item" class="add-new" href="#">Add menu item</a>
+        </section>
+        <td>
         </tr>
         {% for form in menu_items %}
-            <tr>
-                {% for field in form.visible_fields %}
-                    <td id="{{field.label|lower}}-column">
-                        {# Include the hidden fields in the form #}
-                        {% if forloop.first %}
-                            {% for hidden in form.hidden_fields %}
-                                {{ hidden }}
-                            {% endfor %}
-                        {% endif %}
-                        <div class="fieldWrapper">
-                            {{ field.errors }}
-                            {{ field }}
-                            {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                        </div>
-                    </td>
-                {% endfor %}
-            </tr>
+        <tr id="menu-item-row-{{forloop.counter0}}" class="menu-item-row">
+          {% for field in form.visible_fields %}
+          <td id="{{field.label|lower}}-column">
+            {# Include the hidden fields in the form #}
+            {% if forloop.first %}
+            {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
+            {% endif %}
+            <div class="fieldWrapper">
+              {{ field.errors }}
+              {{ field }}
+              {% if field.help_text %}
+              <p class="help">{{ field.help_text|safe }}</p>
+              {% endif %}
+            </div>
+          </td>
+          {% endfor %}
+        </tr>
         {% endfor %}
-    </table>
-    <section class="form-button-section">
+      </table>
+      <section class="form-button-section">
         <input class="form-button" type="submit" value="Save">
         <a class="link-button" href="{% url 'restaurant_tracker:detail' restaurant.id %}">Exit</a>
-        <a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}"><i style="visibility:visible;" class="fas fa-trash-alt"></i></a>
-    </section>
+        <a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}"><i style="visibility:visible;" class="fa-solid fa-trash"></i></a>
+      </section>
     </form>
-
-<script>
-  $(function() {
-    $('#restaurant-form').areYouSure(
+    
+    <script>
+      let addButton = document.querySelector("#add-menu-item")
+      addButton.addEventListener('click', addMenuItem)
+      $(function() {
+        $('#restaurant-form').areYouSure(
+        {
+          message: 'It looks like you have been editing something. '
+          + 'If you leave before saving, your changes will be lost.'
+        }
+        );
+      });
+      
+      function addMenuItem(e)
       {
-        message: 'It looks like you have been editing something. '
-               + 'If you leave before saving, your changes will be lost.'
+        e.preventDefault()
+        fetch("{% url 'restaurant_tracker:menu_item_create' restaurant.id %}").then(
+        (response) => {
+          if (response.status != 200) {
+            console.log("Error retrieving new menu item from server.")
+            return Promise.reject("Error getting new menu item from server.")
+          }
+          return response.json()
+        })
+        .then(dataJson => {
+          
+          let menuForms = document.querySelectorAll(".menu-item-row")
+          let menuNum = menuForms.length - 1
+          let menuContainer = document.querySelector("#restaurant-form")
+          let totalMenuItems = document.querySelector("#id_menuitem_set-TOTAL_FORMS")
+          
+          let newData = dataJson[0]
+          let newMenuItem = menuForms[0].cloneNode(true)
+          let menuItemIdRegex = RegExp(`menu-item-row-(\\d)+`, 'g')
+          let menuItemFormRegex = RegExp(`menuitem_set-(\\d)+`, 'g')
+          menuNum++
+          newMenuItem.id = newMenuItem.id.replace(menuItemIdRegex, `menu-item-row-${menuNum}`)
+          newMenuItem.innerHTML = newMenuItem.innerHTML.replace(menuItemFormRegex, `menuitem_set-${menuNum}`)
+          // Set to data from response
+          newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-name`).setAttribute("value", `${newData["fields"]["name"]}`)
+          //newMenuItem.innerHTML.querySelector(`#id_menuitem_set-${menuNum}-user`).setAttribute("value", `${newData["fields"]["user"]}`)
+          newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-date`).setAttribute("value", `${newData["fields"]["date"]}`)
+          newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-price`).setAttribute("value", `${newData["fields"]["price"]}`)
+          //newMenuItem.innerHTML.querySelector(`#id_menuitem_set-${menuNum}-rating`).setAttribute("value", `${newData["fields"]["rating"]}`)
+          newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-comment`).setAttribute("value", `${newData["fields"]["comment"]}`)
+          menuForms[menuNum-1].after(newMenuItem)
+          totalMenuItems.setAttribute('value', `${menuNum+1}`)
+        })
       }
-    );
-  });
-
-</script>
-{% endblock page %}
+    </script>
+    {% endblock page %}

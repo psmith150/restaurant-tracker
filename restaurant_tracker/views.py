@@ -4,6 +4,7 @@ from django.views import generic
 from django.urls import reverse, reverse_lazy
 from django.forms import ModelForm, inlineformset_factory
 from django.db import transaction
+from django.core import serializers
 from .models import Restaurant, Tag, MenuItem, User
 from .forms import RestaurantForm, TagForm, MenuItemForm, MenuItemsInlineFormSet
 
@@ -106,7 +107,7 @@ def create_tag(request):
     tag.save()
     return HttpResponseRedirect(reverse('restaurant_tracker:tag_edit', args=(tag.id,)))
 
-def create_menu_item(request, pk):
+def get_new_menu_item(request, pk):
     menu_item = MenuItem()
     menu_item.restaurant = get_object_or_404(Restaurant, id=pk)
     first_user = User.objects.first()
@@ -114,5 +115,5 @@ def create_menu_item(request, pk):
         pass
     else:
         menu_item.user = User.objects.first()
-    menu_item.save()
-    return HttpResponseRedirect(reverse('restaurant_tracker:restaurant_edit', args=(pk,)))
+    data = serializers.serialize("json", [menu_item])
+    return HttpResponse(data)

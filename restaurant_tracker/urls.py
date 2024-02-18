@@ -23,5 +23,5 @@ urlpatterns = [
     # ex: /restaurants/tags/1/delete/
     path('tags/<int:pk>/delete/', views.TagDeleteView.as_view(), name='tag_delete'),
     # ex: /restaurants/1/menu_items/create/
-    path('<int:pk>/menu_items/create/', views.create_menu_item, name='menu_item_create'),
+    path('<int:pk>/menu_items/create/', views.get_new_menu_item, name='menu_item_create'),
 ]

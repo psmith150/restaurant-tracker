@@ -46,6 +46,9 @@
         {% endfor %}
     </table>
 {% else %}
+    <section>
+        <a class="add-new" href="{% url 'restaurant_tracker:restaurant_create' %}">Add restaurant</a>
+    </section>
     <p> No restaurants are available.</p>
 {% endif %}
 <div id="filter-sidebar">
