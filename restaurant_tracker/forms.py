@@ -7,7 +7,7 @@ from .models import MAX_PRICE_VALUE, MAX_RATING_VALUE
 class RestaurantForm(ModelForm):
     class Meta:
         model = Restaurant
-        fields = ['name', 'rating', 'price', 'service', 'speed', 'comment', 'is_open', 'tags']
+        fields = ['name', 'rating', 'price', 'service', 'speed', 'comment', 'is_open', 'visited', 'menu', 'website', 'tags']
         widgets = {
             'rating' : StarRatingWidget(stars=MAX_RATING_VALUE, halfStars=True, attrs={'id':'id_star-rating-rating'}),
             'price' : PriceRatingWidget(prices=MAX_PRICE_VALUE, attrs={'id':'id_price-rating-price'}),
@@ -18,6 +18,7 @@ class RestaurantForm(ModelForm):
         labels = {
             'speed': ('Service Speed'),
             'is_open': ('Open/Closed'),
+            'visited': ('Have Visited')
         }
 
 class TagForm(ModelForm):

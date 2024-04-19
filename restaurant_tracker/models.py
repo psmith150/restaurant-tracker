@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from colorful.fields import RGBColorField
 from django.urls import reverse
@@ -66,6 +67,9 @@ class Restaurant(models.Model):
     is_open = models.BooleanField(default=True)
     latitude = models.FloatField('Latitude', default=0.0)
     longitude = models.FloatField('Longitude', default=0.0)
+    visited = models.BooleanField(default=False)
+    website = models.URLField(blank=True)
+    menu = models.FileField(upload_to='uploads/restaurants/menus/', blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='Tags', blank=True)
 
     def save(self, *args, **kwargs):
@@ -158,7 +162,7 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100, default='')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField('Date', default=timezone.now().date())
+    date = models.DateField('Date', default=date.today())
     price = CurrencyField(verbose_name='Price', default=0)
     comment = models.CharField(max_length=300, default='', blank=True)
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
