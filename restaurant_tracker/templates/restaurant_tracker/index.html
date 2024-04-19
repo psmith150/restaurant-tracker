@@ -24,7 +24,11 @@
             <tr>
                 <td id="name-column">{{ restaurant.name }}</td>
                 <td id="rating-column">
-                    {% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}
+                    {% if restaurant.visited %}
+                        {% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}
+                    {% else %}
+                        <span>N/A</span>
+                    {% endif %}
                 </td>
                 <td id="price-column">
                     {% include "restaurant_tracker/price_snippet.html" with price=restaurant.price %}

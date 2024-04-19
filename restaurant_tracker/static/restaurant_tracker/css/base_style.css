@@ -11,6 +11,29 @@
     --button-active-background: linear-gradient(to bottom, rgb(220, 220, 220) 16%, rgb(252, 252, 252) 79%);
     --button-border-color: rgba(150,150,150,1.0);
 }
+
+.flexrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.flexcol {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
 .topnav {
     background-color: #333;
     overflow: hidden;
@@ -72,6 +95,10 @@ h1 {
     text-align: left;
     text-decoration: none;
     font-size: 16px;
+}
+
+.detail-field-container {
+    padding: 10px;
 }
 
 .detail-field-label {

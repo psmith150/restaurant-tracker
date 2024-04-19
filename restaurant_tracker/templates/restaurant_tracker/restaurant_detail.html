@@ -2,67 +2,73 @@
 {% load restaurant_tracker_extras %}
 {% block title %}{{restaurant.name}}{% endblock title %}
 {% block page %}
-<div id="title-content">
-    <h1 class="inline-h1">{{ restaurant.name }}</h1>
-    {% include "restaurant_tracker/restaurant_open_closed_snippet.html" with is_open=restaurant.is_open%}
-    <a href="{% url 'restaurant_tracker:restaurant_edit' restaurant.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
-    <a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}"><i class="fa-solid fa-trash"></i></a>
-    <div class="all-tags-display" style="display:block; max-width:300px">
-        {% if restaurant.tags.count > 0 %}
-            {% for tag in restaurant.tags.all %}
-                {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
+<div class="flexcol" id="restaurant-container">
+    <div id="title-content">
+        <h1 class="inline-h1">{{ restaurant.name }}</h1>
+        {% include "restaurant_tracker/restaurant_open_closed_snippet.html" with is_open=restaurant.is_open%}
+        <a href="{% url 'restaurant_tracker:restaurant_edit' restaurant.id %}"><i class="fa-solid fa-pen-to-square"></i></a>
+        <a href="{% url 'restaurant_tracker:restaurant_delete' restaurant.id %}"><i class="fa-solid fa-trash"></i></a>
+        <div class="all-tags-display" style="display:block; max-width:300px">
+            {% if restaurant.tags.count > 0 %}
+                {% for tag in restaurant.tags.all %}
+                    {% include "restaurant_tracker/tag_display_snippet.html" with tag=tag%}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="flexrow">
+        <div class="detail-field-container{% if not restaurant.visited %} hidden {% endif %}">
+            <span class="detail-field-label">Rating: </span>
+            <span>{% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}</span>
+        </div>
+        <div class="detail-field-container">
+            <span class="detail-field-label">Price: </span>
+            <span>{% include "restaurant_tracker/price_snippet.html" with price=restaurant.price %}</span>
+        </div>
+    </div>
+    <div class="flexrow{% if not restaurant.visited %} hidden {% endif %}">
+        <div class="detail-field-container">
+            <span class="detail-field-label">Service Speed: </span>
+            <span>{% include "restaurant_tracker/speed_snippet.html" with restaurant=restaurant %}</span>
+        </div>
+        <div class="detail-field-container">
+            <span class="detail-field-label">Service Comments: </span>
+            <span>{{restaurant.service|string_or_default:"N/A"}}</span>
+        </div>
+    </div>
+    <div class="flexcol">
+        <span class="detail-field-label">Comments</span>
+        <span>{{ restaurant.comment|string_or_default:"No comments." }}</span>
+    </div>
+    {% comment %} <p>Latitude: {{ restaurant.latitude }}</p>
+    <p>Longitude: {{ restaurant.longitude }}</p> {% endcomment %}
+    <div class="{% if not restaurant.visited %} hidden {% endif %}">
+        {% if restaurant.get_menu_items.count > 0 %}
+            <hr>
+            <h2>Menu Items</h2>
+            <table id="menu-items-table">
+            <tr>
+                <th>Name</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Rating</th>
+                <th>Comment</th>
+            </tr>
+            {% for menu_item in restaurant.get_menu_items %}
+                <tr>
+                    <td id="name-column">{{menu_item.name}}</td>
+                    <td id="user-column">{{menu_item.user}}</td>
+                    <td id="date-column">{{menu_item.date}}</td>
+                    <td id="price-column">{{menu_item.price|currency}}</td>
+                    <td id="rating-column">{% include "restaurant_tracker/star_snippet.html" with rating=menu_item.rating %}</td>
+                    <td id="comment-column">{{menu_item.comment}}</td>
+                </tr>
             {% endfor %}
+            </table>
         {% else %}
-            <p>No tags.</p>
+            <p> No menu items.</p>
         {% endif %}
     </div>
 </div>
-<p>
-    <span class="detail-field-label">Rating: </span>
-    <span>{% include "restaurant_tracker/star_snippet.html" with rating=restaurant.rating %}</span>
-</p>
-<p>
-    <span class="detail-field-label">Price: </span>
-    <span>{% include "restaurant_tracker/price_snippet.html" with price=restaurant.price %}</span>
-</p>
-<p>
-    <span class="detail-field-label">Service Comments: </span>
-    <span>{{restaurant.service|string_or_default:"No comments."}}</span>
-</p>
-<p>
-    <span class="detail-field-label">Service Speed: </span>
-    <span>{% include "restaurant_tracker/speed_snippet.html" with restaurant=restaurant %}</span>
-</p>
-<p>
-    <span class="detail-field-label">Comment: </span>
-    <span>{{ restaurant.comment|string_or_default:"No comments." }}</span>
-</p>
-{% comment %} <p>Latitude: {{ restaurant.latitude }}</p>
-<p>Longitude: {{ restaurant.longitude }}</p> {% endcomment %}
-{% if restaurant.get_menu_items.count > 0 %}
-    <hr>
-    <h2>Menu Items</h2>
-    <table id="menu-items-table">
-    <tr>
-        <th>Name</th>
-        <th>User</th>
-        <th>Date</th>
-        <th>Price</th>
-        <th>Rating</th>
-        <th>Comment</th>
-    </tr>
-    {% for menu_item in restaurant.get_menu_items %}
-        <tr>
-            <td id="name-column">{{menu_item.name}}</td>
-            <td id="user-column">{{menu_item.user}}</td>
-            <td id="date-column">{{menu_item.date}}</td>
-            <td id="price-column">{{menu_item.price|currency}}</td>
-            <td id="rating-column">{% include "restaurant_tracker/star_snippet.html" with rating=menu_item.rating %}</td>
-            <td id="comment-column">{{menu_item.comment}}</td>
-        </tr>
-    {% endfor %}
-    </table>
-{% else %}
-    <p> No menu items.</p>
-{% endif %} 
 {% endblock page %}
