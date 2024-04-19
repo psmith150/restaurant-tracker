@@ -3,6 +3,7 @@ from colorful.fields import RGBColorField
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator, DecimalValidator, ValidationError
 from django.utils import timezone
+from django import forms
 
 #region Constants
 MAX_PRICE_VALUE = 4
@@ -135,7 +136,7 @@ class CurrencyField(models.IntegerField):
         except (TypeError, ValueError):
             raise ValidationError("This value must be an integer or a string that represents an integer.", code='invalid')
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection):
         """
         Gets the value from the database
         """
@@ -146,7 +147,7 @@ class CurrencyField(models.IntegerField):
         Defines the field used in Django forms
         """
         from django.forms import FloatField
-        defaults = {'form_class': FloatField}
+        defaults = {'form_class': FloatField, 'widget': forms.widgets.TextInput()}
         defaults.update(kwargs)
         return super(CurrencyField, self).formfield(**defaults)
 
@@ -157,7 +158,7 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100, default='')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date = models.DateField('Date', default=timezone.now)
+    date = models.DateField('Date', default=timezone.now().date())
     price = CurrencyField(verbose_name='Price', default=0)
     comment = models.CharField(max_length=300, default='', blank=True)
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])

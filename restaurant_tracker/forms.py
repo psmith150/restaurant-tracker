@@ -30,7 +30,8 @@ class MenuItemForm(ModelForm):
         model = MenuItem
         fields = ['name', 'user', 'date', 'price','rating', 'comment']
         widgets = {
-            'rating' : StarRatingWidget(stars=MAX_RATING_VALUE, halfStars=True, attrs={'id':'id_star-rating-rating'}),
+            'rating': StarRatingWidget(stars=MAX_RATING_VALUE, halfStars=True, attrs={'id':'id_star-rating-rating'}),
+            'date': forms.widgets.DateInput(attrs={'type': 'date'})
         }
 
 MenuItemsInlineFormSet = inlineformset_factory(Restaurant, MenuItem, form=MenuItemForm, extra=0)

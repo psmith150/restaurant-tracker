@@ -93,23 +93,23 @@ main {
     padding: 0px 0px 0px 5px;
 }
 
-.fa-edit {
+.fa-pen-to-square {
     color: orange;
     opacity: 0.6;
     visibility: hidden;
 }
 
-.fa-edit:hover {
+.fa-pen-to-square:hover {
     opacity: 1.0;
 }
 
-.fa-trash-alt {
+.fa-trash {
     color: darkgray;
     opacity: 0.6;
     visibility: hidden;
 }
 
-.fa-trash-alt:hover {
+.fa-trash:hover {
     opacity: 1.0;
 }
 
@@ -317,10 +317,15 @@ main {
 
 #menu-items-table input {
     width: 100%;
+    box-sizing: border-box;
 }
 
 #menu-items-table select {
     width: 100% !important;
+}
+
+#menu-items-table .fieldWrapper {
+    padding: 0px 1px;
 }
 
 
@@ -366,6 +371,7 @@ main {
     margin: -7px 0px 3px 0px;
     height: 20px;
 }
+
 /*#endregion*/
 /*#endregion*/
 /*#region Tag pages */
