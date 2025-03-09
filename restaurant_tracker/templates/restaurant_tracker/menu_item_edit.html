@@ -1,0 +1,19 @@
+<tr id="menu-item-row-0" class="menu-item-row">
+    {% for field in form.visible_fields %}
+    <td id="{{field.label|lower}}-column">
+      {# Include the hidden fields in the form #}
+      {% if forloop.first %}
+      {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+      {% endfor %}
+      {% endif %}
+      <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+      </div>
+    </td>
+    {% endfor %}
+</tr>

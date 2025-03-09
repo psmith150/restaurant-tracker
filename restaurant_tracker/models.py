@@ -63,7 +63,7 @@ class Restaurant(models.Model):
         (FAST_SPEED, 'Fast'),
     ]
     speed = models.IntegerField('Speed', choices=SPEED_CHOICES, default=SLOW_SPEED)
-    comment = models.CharField(max_length=300, blank=True, default='')
+    comment = models.CharField(max_length=500, blank=True, default='')
     is_open = models.BooleanField(default=True)
     latitude = models.FloatField('Latitude', default=0.0)
     longitude = models.FloatField('Longitude', default=0.0)
@@ -166,25 +166,3 @@ class MenuItem(models.Model):
     price = CurrencyField(verbose_name='Price', default=0)
     comment = models.CharField(max_length=300, default='', blank=True)
     rating = models.IntegerField('Rating', default=MIN_RATING_VALUE, validators=[MaxValueValidator(limit_value=MAX_RATING_VALUE), MinValueValidator(limit_value=MIN_RATING_VALUE)])
-
-
-
-#Custom Fields
-
-# class Location:
-#     def __init__(self, latitude, longitude):
-#         self.latitude = latitude
-#         self.longitude = longitude
-
-# class LocationField(forms.MultiValueField):
-#     def __init__(self, *args, **kwargs):
-#         fields = (
-#             FloatField(max_value=90, min_value=-90), 
-#             FloatField((max_value=90, min_value=-90)
-#         )
-#         super().__init__(*args, **kwargs)
-
-
-#     def compress(self, data_list):
-#         latitude, longitude = data_list
-#         return Location(latitude, longitude)

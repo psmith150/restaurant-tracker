@@ -18,30 +18,21 @@ function addMenuItem(e) {
                 console.log("Error retrieving new menu item from server.")
                 return Promise.reject("Error getting new menu item from server.")
             }
-            return response.json()
+            return response.text()
         })
-        .then(dataJson => {
-
+        .then(dataText => {
             let menuForms = document.querySelectorAll(".menu-item-row")
-            let menuNum = menuForms.length - 1
-            let menuContainer = document.querySelector("#restaurant-form")
+            let menuNum = Math.max(menuForms.length, 0)
             let totalMenuItems = document.querySelector("#id_menuitem_set-TOTAL_FORMS")
-
-            let newData = dataJson[0]
-            let newMenuItem = menuForms[0].cloneNode(true)
             let menuItemIdRegex = RegExp(`menu-item-row-(\\d)+`, 'g')
             let menuItemFormRegex = RegExp(`menuitem_set-(\\d)+`, 'g')
+            let menuItemPrefixRegex = RegExp(`__prefix__`, 'g')
+            dataText = dataText.replace(menuItemIdRegex, `menu-item-row-${menuNum}`)
+            //dataText = dataText.replace(menuItemFormRegex, `menuitem_set-${menuNum}`)
+            dataText = dataText.replace(menuItemPrefixRegex, `${menuNum}`)
+            
+            document.getElementById('menu-items-table').insertAdjacentHTML('beforeend', dataText)
             menuNum++
-            newMenuItem.id = newMenuItem.id.replace(menuItemIdRegex, `menu-item-row-${menuNum}`)
-            newMenuItem.innerHTML = newMenuItem.innerHTML.replace(menuItemFormRegex, `menuitem_set-${menuNum}`)
-            // Set to data from response
-            newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-name`).setAttribute("value", `${newData["fields"]["name"]}`)
-            //newMenuItem.innerHTML.querySelector(`#id_menuitem_set-${menuNum}-user`).setAttribute("value", `${newData["fields"]["user"]}`)
-            newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-date`).setAttribute("value", `${newData["fields"]["date"]}`)
-            newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-price`).setAttribute("value", `${newData["fields"]["price"]}`)
-            //newMenuItem.innerHTML.querySelector(`#id_menuitem_set-${menuNum}-rating`).setAttribute("value", `${newData["fields"]["rating"]}`)
-            newMenuItem.querySelector(`#id_menuitem_set-${menuNum}-comment`).setAttribute("value", `${newData["fields"]["comment"]}`)
-            menuForms[menuNum - 1].after(newMenuItem)
-            totalMenuItems.setAttribute('value', `${menuNum + 1}`)
+            totalMenuItems.setAttribute('value', `${menuNum}`)
         })
 }

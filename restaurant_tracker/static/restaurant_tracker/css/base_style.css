@@ -34,6 +34,10 @@
     display: none;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .topnav {
     background-color: #333;
     overflow: hidden;
@@ -107,17 +111,18 @@ h1 {
 
 hr {
     width: 90%;
-    text-align: left;
+    text-align: center;
     border-width: 1px;
     border-color: rgba(200,200,200,1.0);
-    margin-left: 0px;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 main {
     width: 100%;
-    padding: 0px 0px 0px 5px;
+    padding: 0px;
 }
 
 .fa-pen-to-square {
